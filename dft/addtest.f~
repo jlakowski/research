@@ -1,0 +1,19 @@
+      program addtest
+      implicit complex(x) !any variable which begins with a x is treated as complex
+     
+      real a
+      real dt
+      complex arg
+      complex ans
+      parameter xI = (0,1)     
+      parameter Pi = 3.141592653589
+      dt = 0.78539816339
+      a = 0
+      do i=1, 8
+         a = i * dt
+         print *,a
+         ans = cexp( xI* a)
+         print *,ans
+      end do
+
+      end program addtest

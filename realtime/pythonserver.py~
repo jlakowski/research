@@ -1,0 +1,46 @@
+# Jim Lakowski May 29, 2013
+#
+# a program to read a file and send it across TCP/IP to a client, pythonclient.py
+# TODO loop the file!
+import socket
+import sys
+import time
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# Bind the socket to the port
+server_address = ('localhost', 10000)
+print >>sys.stderr, 'starting up on %s port %s' % server_address
+sock.bind(server_address)
+
+## Open the file with read only permit
+f = open('solo.trc')
+## Read the first line 
+line = f.readline()
+sock.listen(1)
+## If the file is not empty keep reading line one at a time
+## till the file is empty
+
+# Listen for incoming connections
+
+
+while True:
+    # Wait for a connection
+    print >>sys.stderr, 'waiting for a connection'
+    connection, client_address = sock.accept()
+    try:
+        print >>sys.stderr, 'connection from', client_address
+
+        while line:
+            print line
+            connection.sendall(line)
+            line = f.readline()
+            time.sleep(.08) #12.50 Hz
+    except KeyboardInterrupt:
+        connection.close()
+        f.close()
+        exit()
+        
+    finally:
+        # Clean up the connection
+        connection.close()
+        f.close()

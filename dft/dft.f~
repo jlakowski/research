@@ -1,0 +1,53 @@
+      ! A DFT using the same method as dft.py
+      ! Im using FORTRAN so it runs faster
+      ! Jim Lakowski
+      !  10/04/2013
+
+      program dft
+
+      ! Variable Declarations
+      
+      REAL, PARAMETER :: Pi = 3.1415927
+      integer, PARAMETER :: M = 2000
+      integer, PARAMETER :: N = 1000
+      
+      real t(N)
+      real f(N)
+      real s(M)
+      complex Ft(M)
+
+      real dt 
+      real to
+      real so
+      real ds
+      real sf
+
+      complex arg = 0
+      complex acc = 0
+
+      dt = 0.01
+      to = 0
+      so = -10
+      ds = 0.01
+
+      ! set up the time vector an the func
+      do a=1, N
+         t(a) = to + a* dt
+         f(a) = cos(t(a))
+
+      end do
+
+      do b = 1, M
+         acc = 0
+         s(b) = so + b*ds
+         do k = 1, N
+            arg = I 2 * Pi* s(b) * t(k)
+            acc = acc + f(k)*exp(-arg)*dt
+            
+         end do
+         Ft(b) = acc
+         print *,acc
+
+       end do
+       
+       end program dft
